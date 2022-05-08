@@ -1,8 +1,8 @@
 <script lang="ts">
 	import OxCell from '$lib/components/ox-cell.svelte';
 	import { writable } from 'svelte/store';
-	import type { OxCellState } from '$lib/data/ox-cell-state';
-	import { OxGame } from '$lib/data/ox-game';
+	import type { OxCellState } from '$lib/game/ox-cell-state';
+	import { OxGame } from '$lib/game/ox-game';
 
 	const ox = writable(new OxGame());
 

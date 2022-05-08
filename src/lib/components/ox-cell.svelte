@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { OxCellState } from '$lib/data/ox-cell-state';
+	import type { OxCellState } from '$lib/game/ox-cell-state';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatcher = createEventDispatcher<{ cellClick: OxCellState }>();
