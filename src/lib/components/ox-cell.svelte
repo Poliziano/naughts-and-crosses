@@ -15,7 +15,7 @@
 	{#if state.type === 'X'}
 		X
 	{:else if state.type === 'O'}
-		O
+		<img class="ox" src="O_1.png" alt="Naught" />
 	{/if}
 </div>
 
@@ -26,5 +26,9 @@
 		align-items: center;
 		color: white;
 		cursor: pointer;
+	}
+	.ox {
+		width: 50%;
+		height: 50%;
 	}
 </style>

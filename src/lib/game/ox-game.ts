@@ -1,12 +1,12 @@
 import { gameWinnigLines } from './lines';
 import type { Location } from './location';
 import { OxBoard } from './ox-board';
-import { OxComputerPlayer, OxHumanPlayer, type OxPlayer } from './ox-player';
+import { OxHumanPlayer, type OxPlayer } from './ox-player';
 
 export class OxGame {
 	board = new OxBoard();
 
-	#players: OxPlayer[] = [new OxHumanPlayer('X'), new OxComputerPlayer('O')];
+	#players: OxPlayer[] = [new OxHumanPlayer('X'), new OxHumanPlayer('O')];
 	#playerIndex = 0;
 
 	#won = false;
