@@ -7,7 +7,9 @@
 	export let state: OxCellState;
 
 	function handleClick() {
-		dispatcher('cellClick', state);
+		if (state.type === 'empty') {
+			dispatcher('cellClick', state);
+		}
 	}
 </script>
 

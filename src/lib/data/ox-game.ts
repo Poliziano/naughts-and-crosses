@@ -1,3 +1,4 @@
+import { targets } from './lines';
 import type { Location } from './location';
 import { OxBoard } from './ox-board';
 
@@ -12,5 +13,25 @@ export class OxGame {
 		});
 
 		this.player = this.player === 'O' ? 'X' : 'O';
+
+		if (this.#checkGameWon()) {
+			console.log('FUCKING WON MATE!');
+		}
+	}
+
+	#checkGameWon() {
+		for (const target of targets) {
+			const line = target.map((location) => this.board.get(location));
+
+			if (line.every((cell) => cell.type === 'O')) {
+				return true;
+			}
+
+			if (line.every((cell) => cell.type === 'X')) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
