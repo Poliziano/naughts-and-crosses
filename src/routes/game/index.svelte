@@ -30,11 +30,11 @@
 
 	<h2>
 		{#if $ox.isWon()}
-			{$ox.player} wins!
+			{$ox.currentPlayer().mark} wins!
 		{:else if !$ox.hasMovesRemaining()}
 			Draw! No moves remaining!
 		{:else}
-			Player {$ox.player}'s turn!
+			Player {$ox.currentPlayer().mark}'s turn!
 		{/if}
 	</h2>
 	<button on:click={handleNewGameClicked}>New Game</button>

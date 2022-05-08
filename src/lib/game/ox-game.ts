@@ -1,10 +1,13 @@
 import { gameWinnigLines } from './lines';
 import type { Location } from './location';
 import { OxBoard } from './ox-board';
+import { OxComputerPlayer, OxHumanPlayer, type OxPlayer } from './ox-player';
 
 export class OxGame {
 	board = new OxBoard();
-	player: 'O' | 'X' = 'X';
+
+	#players: OxPlayer[] = [new OxHumanPlayer('X'), new OxComputerPlayer('O')];
+	#playerIndex = 0;
 
 	#won = false;
 	#movesRemaining = 9;
@@ -24,7 +27,7 @@ export class OxGame {
 
 		this.board.set(location, {
 			location: location,
-			type: this.player
+			type: this.currentPlayer().mark
 		});
 
 		this.#won = this.#checkGameWon();
@@ -35,15 +38,19 @@ export class OxGame {
 		} else if (!this.hasMovesRemaining()) {
 			console.log('NO MOVES REMAINING');
 		} else {
-			this.player = this.player === 'O' ? 'X' : 'O';
+			this.#nextPlayer().beginTurn(this);
 		}
 	}
 
 	reset() {
 		this.board = new OxBoard();
-		this.player = 'X';
+		this.#playerIndex = 0;
 		this.#won = false;
 		this.#movesRemaining = 9;
+	}
+
+	currentPlayer(): OxPlayer {
+		return this.#players[this.#playerIndex];
 	}
 
 	#checkGameWon() {
@@ -64,5 +71,10 @@ export class OxGame {
 
 	#checkMovesRemaining() {
 		return this.board.cells().filter((cell) => cell.type === 'empty').length;
+	}
+
+	#nextPlayer(): OxPlayer {
+		this.#playerIndex = this.#playerIndex === 0 ? 1 : 0;
+		return this.#players[this.#playerIndex];
 	}
 }
