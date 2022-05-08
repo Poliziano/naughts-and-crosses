@@ -12,6 +12,13 @@
 			return value;
 		});
 	}
+
+	function handleNewGameClicked() {
+		ox.update(function (value) {
+			value.reset();
+			return value;
+		});
+	}
 </script>
 
 <div class="ox-container">
@@ -30,6 +37,7 @@
 			Player {$ox.player}'s turn!
 		{/if}
 	</h2>
+	<button on:click={handleNewGameClicked}>New Game</button>
 </div>
 
 <style>

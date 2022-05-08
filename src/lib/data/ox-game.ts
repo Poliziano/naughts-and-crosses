@@ -39,6 +39,13 @@ export class OxGame {
 		}
 	}
 
+	reset() {
+		this.board = new OxBoard();
+		this.player = 'X';
+		this.#won = false;
+		this.#movesRemaining = 9;
+	}
+
 	#checkGameWon() {
 		for (const locations of gameWinnigLines) {
 			const line = locations.map((location) => this.board.get(location));
