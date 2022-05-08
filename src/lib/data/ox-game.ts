@@ -1,4 +1,4 @@
-import { targets } from './lines';
+import { gameWinnigLines } from './lines';
 import type { Location } from './location';
 import { OxBoard } from './ox-board';
 
@@ -20,8 +20,8 @@ export class OxGame {
 	}
 
 	#checkGameWon() {
-		for (const target of targets) {
-			const line = target.map((location) => this.board.get(location));
+		for (const locations of gameWinnigLines) {
+			const line = locations.map((location) => this.board.get(location));
 
 			if (line.every((cell) => cell.type === 'O')) {
 				return true;

@@ -1,6 +1,6 @@
 import type { Location } from './location';
 
-export const targets: Location[][] = [
+export const gameWinnigLines: Location[][] = [
 	// Horizontals
 	[
 		{ row: 0, column: 0 },
