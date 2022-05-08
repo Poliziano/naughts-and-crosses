@@ -14,23 +14,33 @@
 	}
 </script>
 
-<div class="ox-slate">
-	{#each $ox.board.cells() as cell}
-		<OxCell state={cell} on:cellClick={handleCellClicked} />
-	{/each}
-</div>
+<div class="ox-container">
+	<div class="ox-slate">
+		{#each $ox.board.cells() as cell}
+			<OxCell state={cell} on:cellClick={handleCellClicked} />
+		{/each}
+	</div>
 
-<div>
-	{#if $ox.isWon()}
-		{$ox.player} wins!
-	{:else if !$ox.hasMovesRemaining()}
-		Draw! No moves remaining!
-	{:else}
-		Player {$ox.player}'s turn!
-	{/if}
+	<h2>
+		{#if $ox.isWon()}
+			{$ox.player} wins!
+		{:else if !$ox.hasMovesRemaining()}
+			Draw! No moves remaining!
+		{:else}
+			Player {$ox.player}'s turn!
+		{/if}
+	</h2>
 </div>
 
 <style>
+	.ox-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+	}
 	.ox-slate {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
