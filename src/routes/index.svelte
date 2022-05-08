@@ -1,34 +1,23 @@
 <script lang="ts">
 	import OxCell from '$lib/components/ox-cell.svelte';
-	import type { OxCellState } from '$lib/data/ox-cell-state';
-	import { OxState } from '$lib/data/ox-state';
 	import { writable } from 'svelte/store';
+	import type { OxCellState } from '$lib/data/ox-cell-state';
+	import { OxGame } from '$lib/data/ox-game';
 
-	const ox = writable(new OxState());
+	const ox = writable(new OxGame());
 
 	function handleCellClicked(event: CustomEvent<OxCellState>) {
 		ox.update(function (value) {
-			value.set(event.detail.location, {
-				location: event.detail.location,
-				type: 'X'
-			});
+			value.place(event.detail.location);
 			return value;
 		});
 	}
 </script>
 
 <div class="ox-slate">
-	<OxCell state={$ox.get({ row: 0, column: 0 })} on:cellClick={handleCellClicked} />
-	<OxCell state={$ox.get({ row: 0, column: 1 })} on:cellClick={handleCellClicked} />
-	<OxCell state={$ox.get({ row: 0, column: 2 })} on:cellClick={handleCellClicked} />
-
-	<OxCell state={$ox.get({ row: 1, column: 0 })} on:cellClick={handleCellClicked} />
-	<OxCell state={$ox.get({ row: 1, column: 1 })} on:cellClick={handleCellClicked} />
-	<OxCell state={$ox.get({ row: 1, column: 2 })} on:cellClick={handleCellClicked} />
-
-	<OxCell state={$ox.get({ row: 2, column: 0 })} on:cellClick={handleCellClicked} />
-	<OxCell state={$ox.get({ row: 2, column: 1 })} on:cellClick={handleCellClicked} />
-	<OxCell state={$ox.get({ row: 2, column: 2 })} on:cellClick={handleCellClicked} />
+	{#each $ox.board.cells() as cell}
+		<OxCell state={cell} on:cellClick={handleCellClicked} />
+	{/each}
 </div>
 
 <style>
