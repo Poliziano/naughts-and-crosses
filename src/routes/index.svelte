@@ -53,8 +53,9 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(3, 1fr);
-		width: 500px;
-		height: 500px;
-		background-color: slategray;
+		width: 512px;
+		height: 512px;
+		background-image: url('ox_board.png');
+		background-size: contain;
 	}
 </style>
