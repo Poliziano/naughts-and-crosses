@@ -34,4 +34,8 @@ export class OxBoard {
 	cells(): OxCellState[] {
 		return this.#cells.flat();
 	}
+
+	isWon(): boolean {
+		return false;
+	}
 }
