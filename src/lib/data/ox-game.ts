@@ -18,7 +18,7 @@ export class OxGame {
 	}
 
 	place(location: Location) {
-		if (this.board.get(location).type !== 'empty') {
+		if (this.isWon() || !this.hasMovesRemaining() || this.board.get(location).type !== 'empty') {
 			return;
 		}
 
