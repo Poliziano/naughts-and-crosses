@@ -55,7 +55,7 @@
 		grid-template-rows: repeat(3, 1fr);
 		width: 512px;
 		height: 512px;
-		background-image: url('ox_board.png');
+		background-image: url('/ox_board.png');
 		background-size: contain;
 	}
 </style>
