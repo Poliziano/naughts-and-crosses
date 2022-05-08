@@ -7,14 +7,16 @@
 	export let state: OxCellState;
 
 	function handleClick() {
-		if (state.type === 'empty') {
-			dispatcher('cellClick', state);
-		}
+		dispatcher('cellClick', state);
 	}
 </script>
 
 <div class="ox-cell" on:click={handleClick}>
-	{state.type.toString().toUpperCase()}
+	{#if state.type === 'X'}
+		X
+	{:else if state.type === 'O'}
+		O
+	{/if}
 </div>
 
 <style>

@@ -20,6 +20,16 @@
 	{/each}
 </div>
 
+<div>
+	{#if $ox.isWon()}
+		{$ox.player} wins!
+	{:else if !$ox.hasMovesRemaining()}
+		Draw! No moves remaining!
+	{:else}
+		Player {$ox.player}'s turn!
+	{/if}
+</div>
+
 <style>
 	.ox-slate {
 		display: grid;

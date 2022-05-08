@@ -6,16 +6,36 @@ export class OxGame {
 	board = new OxBoard();
 	player: 'O' | 'X' = 'X';
 
+	#won = false;
+	#movesRemaining = 9;
+
+	isWon() {
+		return this.#won;
+	}
+
+	hasMovesRemaining() {
+		return this.#movesRemaining > 0;
+	}
+
 	place(location: Location) {
+		if (this.board.get(location).type !== 'empty') {
+			return;
+		}
+
 		this.board.set(location, {
 			location: location,
 			type: this.player
 		});
 
-		this.player = this.player === 'O' ? 'X' : 'O';
+		this.#won = this.#checkGameWon();
+		this.#movesRemaining = this.#checkMovesRemaining();
 
-		if (this.#checkGameWon()) {
+		if (this.isWon()) {
 			console.log('FUCKING WON MATE!');
+		} else if (!this.hasMovesRemaining()) {
+			console.log('NO MOVES REMAINING');
+		} else {
+			this.player = this.player === 'O' ? 'X' : 'O';
 		}
 	}
 
@@ -33,5 +53,9 @@ export class OxGame {
 		}
 
 		return false;
+	}
+
+	#checkMovesRemaining() {
+		return this.board.cells().filter((cell) => cell.type === 'empty').length;
 	}
 }
