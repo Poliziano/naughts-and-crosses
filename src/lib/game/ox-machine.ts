@@ -1,7 +1,7 @@
 import { createMachine, assign } from 'xstate';
 import { gameWinnigLines } from './lines';
 import type { OxCellState } from './ox-cell-state';
-import type { Location } from './location';
+import type { OxLocation } from './ox-location';
 import type { Observable } from 'rxjs';
 
 export type Context = {
@@ -11,7 +11,7 @@ export type Context = {
 
 export type Event =
 	| { type: 'START' }
-	| { type: 'TURN_COMPLETED'; location: Location }
+	| { type: 'TURN_COMPLETED'; location: OxLocation }
 	| { type: 'GAME_WON' }
 	| { type: 'OUT_OF_MOVES' };
 
@@ -122,7 +122,7 @@ export function createOxMachine({ playerOneInput, playerTwoInput }: OxMachinePar
 					cells[location.row][location.column].type = currentPlayer;
 					return context;
 				}),
-				assignNextPlayer: assign((context, event) => ({
+				assignNextPlayer: assign((context) => ({
 					currentPlayer: context.currentPlayer === 'X' ? 'O' : 'X'
 				}))
 			},

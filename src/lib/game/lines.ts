@@ -1,6 +1,6 @@
-import type { Location } from './location';
+import type { OxLocation } from './ox-location';
 
-export const gameWinnigLines: Location[][] = [
+export const gameWinnigLines: OxLocation[][] = [
 	// Horizontals
 	[
 		{ row: 0, column: 0 },

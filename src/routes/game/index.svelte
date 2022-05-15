@@ -2,7 +2,7 @@
 	import OxCell from '$lib/components/ox-cell.svelte';
 	import type { OxCellState } from '$lib/game/ox-cell-state';
 	import { createOxMachine, type Event } from '$lib/game/ox-machine';
-	import { map, Observable, Subject, of, delay, pipe } from 'rxjs';
+	import { map, Observable, Subject, of, delay } from 'rxjs';
 	import { interpret } from 'xstate';
 
 	const cellClicked = new Subject<OxCellState>();
@@ -15,7 +15,7 @@
 
 	const machine = createOxMachine({
 		playerOneInput: () => playerOneObservable,
-		playerTwoInput: (context, event) => {
+		playerTwoInput: (context) => {
 			const cells: OxCellState[] = context.cells.flat();
 			const availableCells = cells.filter((cell) => cell.type === 'empty');
 			const selection = Math.floor(Math.random() * availableCells.length);
