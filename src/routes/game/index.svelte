@@ -39,6 +39,12 @@
 	$: cells = $service.context.cells.flat();
 </script>
 
+<div class="header">
+	<a href="/"><img class="home" src="home.svg" alt="Return Home" /></a>
+	<h1>OX Game</h1>
+	<button class="new-game" on:click={() => service.send('START')}>New Game</button>
+</div>
+
 <div class="ox-container">
 	<div class="ox-slate">
 		{#each cells as cell}
@@ -55,7 +61,6 @@
 			Player {context.currentPlayer}'s turn!
 		{/if}
 	</h2>
-	<button on:click={() => service.send('START')}>New Game</button>
 </div>
 
 <style>
@@ -75,5 +80,30 @@
 		height: 512px;
 		background-image: url('/ox_board.png');
 		background-size: contain;
+	}
+	.header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+		height: 50px;
+		padding: 0 15px;
+		box-sizing: border-box;
+		border-bottom: 1px solid rgb(55, 55, 55);
+	}
+	.home {
+		width: 40px;
+		height: 40px;
+	}
+	.new-game {
+		padding: 5px;
+		border: 2px solid white;
+		border-radius: 5px;
+		background: none;
+		color: inherit;
+		font: inherit;
+		cursor: pointer;
+		outline: inherit;
 	}
 </style>
