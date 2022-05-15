@@ -6,7 +6,7 @@ test("ID for non-existing user returns null", async () => {
 });
 
 test("ID for newly created user returns the new user", async () => {
-  const newUser = await createUser();
-  const response = await getUser(newUser.id);
-  expect(response).toEqual(newUser);
+  const user = await createUser();
+  const response = await getUser(user.id);
+  expect(response).toEqual(user);
 });
