@@ -14,8 +14,8 @@
 	);
 
 	const machine = createOxMachine({
-		getPlayerOneInput: () => playerOneObservable,
-		getPlayerTwoInput: (context, event) => {
+		playerOneInput: () => playerOneObservable,
+		playerTwoInput: (context, event) => {
 			const cells: OxCellState[] = context.cells.flat();
 			const availableCells = cells.filter((cell) => cell.type === 'empty');
 			const selection = Math.floor(Math.random() * availableCells.length);
@@ -28,6 +28,7 @@
 	});
 	const service = interpret(machine).start();
 	service.send('START');
+	$: context = $service.context;
 	$: cells = $service.context.cells.flat();
 </script>
 
@@ -38,15 +39,15 @@
 		{/each}
 	</div>
 
-	<!-- <h2>
-		{#if $ox.isWon()}
-			{$ox.currentPlayer().mark} wins!
-		{:else if !$ox.hasMovesRemaining()}
+	<h2>
+		{#if $service.matches({ playing: 'gameWon' })}
+			{context.currentPlayer} wins!
+		{:else if $service.matches({ playing: 'outOfMoves' })}
 			Draw! No moves remaining!
 		{:else}
-			Player {$ox.currentPlayer().mark}'s turn!
+			Player {context.currentPlayer}'s turn!
 		{/if}
-	</h2> -->
+	</h2>
 	<button on:click={() => service.send('START')}>New Game</button>
 </div>
 

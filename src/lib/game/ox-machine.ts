@@ -15,12 +15,13 @@ export type Event =
 	| { type: 'GAME_WON' }
 	| { type: 'OUT_OF_MOVES' };
 
-export type PlayerObservable = (context: Context, event: Event) => Observable<Event>;
+type PlayerObservable = (context: Context, event: Event) => Observable<Event>;
+type OxMachineParams = {
+	playerOneInput: PlayerObservable;
+	playerTwoInput: PlayerObservable;
+};
 
-export function createOxMachine(config: {
-	getPlayerOneInput: PlayerObservable;
-	getPlayerTwoInput: PlayerObservable;
-}) {
+export function createOxMachine({ playerOneInput, playerTwoInput }: OxMachineParams) {
 	return createMachine<Context, Event>(
 		{
 			initial: 'stopped',
@@ -35,7 +36,7 @@ export function createOxMachine(config: {
 					}
 				},
 				playing: {
-					initial: 'playerOneTurnBegin',
+					initial: 'playerTurnBegin',
 					entry: ['resetGameState'],
 					on: {
 						START: {
@@ -43,19 +44,19 @@ export function createOxMachine(config: {
 						}
 					},
 					states: {
-						playerOneTurnBegin: {
+						playerTurnBegin: {
 							invoke: {
-								src: 'waitForPlayerOneMove'
+								src: 'waitForPlayerInput'
 							},
 							on: {
 								TURN_COMPLETED: {
-									target: 'playerOneTurnEnd',
+									target: 'playerTurnEnd',
 									cond: 'isInputValid',
 									actions: ['place']
 								}
 							}
 						},
-						playerOneTurnEnd: {
+						playerTurnEnd: {
 							always: [
 								{
 									target: 'gameWon',
@@ -66,49 +67,28 @@ export function createOxMachine(config: {
 									cond: 'hasNoMovesRemaining'
 								},
 								{
-									target: 'playerTwoTurnBegin',
+									target: 'playerTurnBegin',
 									actions: ['assignNextPlayer']
 								}
 							]
 						},
-						playerTwoTurnBegin: {
-							invoke: {
-								src: 'waitForPlayerTwoMove'
-							},
-							on: {
-								TURN_COMPLETED: {
-									target: 'playerTwoTurnEnd',
-									cond: 'isInputValid',
-									actions: ['place']
-								}
-							}
+						gameWon: {
+							type: 'final'
 						},
-						playerTwoTurnEnd: {
-							always: [
-								{
-									target: 'gameWon',
-									cond: 'isGameWon'
-								},
-								{
-									target: 'outOfMoves',
-									cond: 'hasNoMovesRemaining'
-								},
-								{
-									target: 'playerOneTurnBegin',
-									actions: ['assignNextPlayer']
-								}
-							]
-						},
-						gameWon: {},
-						outOfMoves: {}
+						outOfMoves: {
+							type: 'final'
+						}
 					}
 				}
 			}
 		},
 		{
 			services: {
-				waitForPlayerOneMove: config.getPlayerOneInput,
-				waitForPlayerTwoMove: config.getPlayerTwoInput
+				waitForPlayerInput(context, event) {
+					return context.currentPlayer === 'X'
+						? playerOneInput(context, event)
+						: playerTwoInput(context, event);
+				}
 			},
 			actions: {
 				resetGameState: assign({
