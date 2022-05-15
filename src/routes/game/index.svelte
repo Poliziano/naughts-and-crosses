@@ -1,30 +1,34 @@
 <script lang="ts">
 	import OxCell from '$lib/components/ox-cell.svelte';
 	import type { OxCellState } from '$lib/game/ox-cell-state';
-	import { createOxMachine, type Event } from '$lib/game/ox-machine';
-	import { map, Observable, Subject, of, delay } from 'rxjs';
+	import { createOxMachine, type Context, type Event } from '$lib/game/ox-machine';
+	import { delay, map, of, Subject } from 'rxjs';
 	import { interpret } from 'xstate';
 
 	const cellClicked = new Subject<OxCellState>();
-	const playerOneObservable: Observable<Event> = cellClicked.pipe(
-		map((value) => ({
+
+	const human = () =>
+		cellClicked.pipe(
+			map<OxCellState, Event>((value) => ({
+				type: 'TURN_COMPLETED',
+				location: value.location
+			}))
+		);
+
+	const computer = (context: Context) => {
+		const cells: OxCellState[] = context.cells.flat();
+		const availableCells = cells.filter((cell) => cell.type === 'empty');
+		const selection = Math.floor(Math.random() * availableCells.length);
+
+		return of<Event>({
 			type: 'TURN_COMPLETED',
-			location: value.location
-		}))
-	);
+			location: availableCells[selection].location
+		}).pipe(delay(500));
+	};
 
 	const machine = createOxMachine({
-		playerOneInput: () => playerOneObservable,
-		playerTwoInput: (context) => {
-			const cells: OxCellState[] = context.cells.flat();
-			const availableCells = cells.filter((cell) => cell.type === 'empty');
-			const selection = Math.floor(Math.random() * availableCells.length);
-
-			return of<Event>({
-				type: 'TURN_COMPLETED',
-				location: availableCells[selection].location
-			}).pipe(delay(500));
-		}
+		playerOneInput: human,
+		playerTwoInput: computer
 	});
 	const service = interpret(machine).start();
 	service.send('START');
