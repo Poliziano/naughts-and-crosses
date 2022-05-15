@@ -1,6 +1,6 @@
 import { createMachine, assign } from 'xstate';
 import { gameWinnigLines } from './lines';
-import type { OxCellState } from './ox-cell-state';
+import type { OxCellState, OxPebbleCellState } from './ox-cell-state';
 import type { OxLocation } from './ox-location';
 import type { Observable } from 'rxjs';
 
@@ -119,7 +119,13 @@ export function createOxMachine({ playerOneInput, playerTwoInput }: OxMachinePar
 					const { location } = event;
 					console.log(currentPlayer, location);
 
-					cells[location.row][location.column].type = currentPlayer;
+					const pebble = cells.flat().filter((value) => value.type === currentPlayer).length;
+
+					cells[location.row][location.column] = {
+						type: currentPlayer,
+						location,
+						pebble: pebble as OxPebbleCellState['pebble']
+					};
 					return context;
 				}),
 				assignNextPlayer: assign((context) => ({
