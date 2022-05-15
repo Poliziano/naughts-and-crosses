@@ -109,7 +109,7 @@ export function createOxMachine({ playerOneInput, playerTwoInput }: OxMachinePar
 							{ type: 'empty', location: { row: 2, column: 2 } }
 						]
 					],
-					currentPlayer: (_context, _event) => 'X' // (Math.random() > 0.5 ? "X" : "O"),
+					currentPlayer: (_context, _event) => (Math.random() > 0.5 ? 'X' : 'O')
 				}),
 				place: assign((context, event) => {
 					if (event.type !== 'TURN_COMPLETED') {
