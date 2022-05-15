@@ -1,6 +1,10 @@
 <div class="menu">
-	<a href="/game?type=computer">Vs Computer</a>
-	<a href="/game?type=local">Two Player Co-Op</a>
+	<a href="/game?type=computer">
+		<img class="button" src="ox_vs_computer.png" alt="vs computer" />
+	</a>
+	<a href="/game?type=local">
+		<img class="button" src="ox_vs_local.png" alt="vs local" />
+	</a>
 </div>
 
 <style>
@@ -12,5 +16,8 @@
 		justify-content: center;
 		align-items: center;
 		gap: 25px;
+	}
+	.button {
+		height: 150px;
 	}
 </style>
