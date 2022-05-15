@@ -7,8 +7,8 @@ export type RoomConnection = {
 
 export function toRoomConnectionItem(connection: RoomConnection) {
   return {
-    PK: `ROOM#${connection.roomId}`,
-    SK: `USER#${connection.userId}`,
+    PK: `USER#${connection.userId}`,
+    SK: `ROOM#${connection.roomId}`,
   };
 }
 
@@ -16,7 +16,7 @@ export function fromRoomConnectionItem(item: {
   [index: string]: NativeAttributeValue;
 }): RoomConnection {
   return {
-    roomId: item.PK.split("#")[1],
-    userId: item.SK.split("#")[1],
+    userId: item.PK.split("#")[1],
+    roomId: item.SK.split("#")[1],
   };
 }
