@@ -37,7 +37,7 @@ export class BackendStack extends Stack {
 
     const lambdaOXWebsocket = new TransactionsNodejsFunction(
       this,
-      "OXWebsocket",
+      "OXWebSocket",
       "ox-websocket.ts"
     );
 
@@ -45,12 +45,33 @@ export class BackendStack extends Stack {
     oxTable.grantReadWriteData(lambdaConnectionGet);
     oxTable.grantReadWriteData(lambdaOXWebsocket);
 
-    new apigatewayv2.WebSocketApi(this, "OX Websocket API", {
+    const api = new apigatewayv2.WebSocketApi(this, "OX WebSocket API", {
       defaultRouteOptions: {
         integration: new WebSocketLambdaIntegration(
-          "OX WebSocket",
+          "OX WebSocket Default",
           lambdaOXWebsocket
         ),
+      },
+      connectRouteOptions: {
+        integration: new WebSocketLambdaIntegration(
+          "OX WebSocket Connect",
+          lambdaOXWebsocket
+        ),
+      },
+      disconnectRouteOptions: {
+        integration: new WebSocketLambdaIntegration(
+          "OX WebSocket Disconnect",
+          lambdaOXWebsocket
+        ),
+      },
+    });
+    new apigatewayv2.WebSocketStage(this, "OX WebSocket API Prod", {
+      webSocketApi: api,
+      autoDeploy: true,
+      stageName: "prod",
+      throttle: {
+        rateLimit: 100,
+        burstLimit: 10,
       },
     });
   }
