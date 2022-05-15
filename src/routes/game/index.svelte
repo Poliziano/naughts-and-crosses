@@ -4,6 +4,7 @@
 	import { createOxMachine, type Context, type Event } from '$lib/game/ox-machine';
 	import { delay, map, of, Subject } from 'rxjs';
 	import { interpret } from 'xstate';
+	import { page } from '$app/stores';
 
 	const cellClicked = new Subject<OxCellState>();
 
@@ -26,9 +27,11 @@
 		}).pipe(delay(500));
 	};
 
+	const humanVsComputer = $page.url.searchParams.get('type') === 'computer';
+
 	const machine = createOxMachine({
 		playerOneInput: human,
-		playerTwoInput: computer
+		playerTwoInput: humanVsComputer ? computer : human
 	});
 	const service = interpret(machine).start();
 	service.send('START');
