@@ -1,16 +1,17 @@
+import * as apigatewayv2 from "@aws-cdk/aws-apigatewayv2-alpha";
+import { WebSocketLambdaIntegration } from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
 import { Stack, StackProps } from "aws-cdk-lib";
-import { Construct } from "constructs";
-import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import * as dynamodb from "aws-cdk-lib/aws-dynamodb";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { Construct } from "constructs";
 import * as path from "path";
 
 export class BackendStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const transactionsTable = new dynamodb.Table(this, "OXGame", {
+    const oxTable = new dynamodb.Table(this, "OXGame", {
       partitionKey: {
         name: "PK",
         type: dynamodb.AttributeType.STRING,
@@ -22,20 +23,36 @@ export class BackendStack extends Stack {
       tableName: "OXGame",
     });
 
-    const lambdaTransactionGet = new TransactionsNodejsFunction(
+    const lambdaUserGet = new TransactionsNodejsFunction(
       this,
       "UserGet",
       "user-get.ts"
     );
 
-    const lambdaTransactionCreate = new TransactionsNodejsFunction(
+    const lambdaConnectionGet = new TransactionsNodejsFunction(
       this,
       "ConnectionGet",
       "connection-get.ts"
     );
 
-    transactionsTable.grantReadData(lambdaTransactionGet);
-    transactionsTable.grantWriteData(lambdaTransactionCreate);
+    const lambdaOXWebsocket = new TransactionsNodejsFunction(
+      this,
+      "OXWebsocket",
+      "ox-websocket.ts"
+    );
+
+    oxTable.grantReadWriteData(lambdaUserGet);
+    oxTable.grantReadWriteData(lambdaConnectionGet);
+    oxTable.grantReadWriteData(lambdaOXWebsocket);
+
+    new apigatewayv2.WebSocketApi(this, "OX Websocket API", {
+      defaultRouteOptions: {
+        integration: new WebSocketLambdaIntegration(
+          "OX WebSocket",
+          lambdaOXWebsocket
+        ),
+      },
+    });
   }
 }
 

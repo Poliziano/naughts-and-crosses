@@ -8,16 +8,19 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest --watch",
-    "cdk": "cdk"
+    "cdk:bootstrap": "cdk bootstrap",
+    "cdk:deploy": "cdk deploy"
   },
   "devDependencies": {
+    "@aws-cdk/aws-apigatewayv2-alpha": "2.24.1-alpha.0",
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": "2.24.1-alpha.0",
     "@jest/globals": "^28.0.3",
     "@tsconfig/node16": "^1.0.2",
     "@types/aws-lambda": "^8.10.97",
     "@types/jest": "^27.5.1",
     "@types/node": "10.17.27",
-    "aws-cdk": "2.22.0",
-    "aws-cdk-lib": "2.22.0",
+    "aws-cdk": "2.24.1",
+    "aws-cdk-lib": "2.24.1",
     "aws-sdk": "^2.1135.0",
     "constructs": "^10.0.0",
     "esbuild": "^0.14.39",

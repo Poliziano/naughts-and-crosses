@@ -7,6 +7,8 @@ importers:
 
   apps/backend:
     specifiers:
+      '@aws-cdk/aws-apigatewayv2-alpha': 2.24.1-alpha.0
+      '@aws-cdk/aws-apigatewayv2-integrations-alpha': 2.24.1-alpha.0
       '@aws-sdk/client-dynamodb': ^3.87.0
       '@aws-sdk/lib-dynamodb': ^3.87.0
       '@aws-sdk/smithy-client': ^3.85.0
@@ -17,8 +19,8 @@ importers:
       '@types/aws-lambda': ^8.10.97
       '@types/jest': ^27.5.1
       '@types/node': 10.17.27
-      aws-cdk: 2.22.0
-      aws-cdk-lib: 2.22.0
+      aws-cdk: 2.24.1
+      aws-cdk-lib: 2.24.1
       aws-sdk: ^2.1135.0
       constructs: ^10.0.0
       esbuild: ^0.14.39
@@ -38,13 +40,15 @@ importers:
       ksuid: 3.0.0
       source-map-support: 0.5.21
     devDependencies:
+      '@aws-cdk/aws-apigatewayv2-alpha': 2.24.1-alpha.0_6wvhjcb7vhvipf6c3xp3hby66i
+      '@aws-cdk/aws-apigatewayv2-integrations-alpha': 2.24.1-alpha.0_32givmtu5o4mhcews7wdrdv3pu
       '@jest/globals': 28.1.0
       '@tsconfig/node16': 1.0.2
       '@types/aws-lambda': 8.10.97
       '@types/jest': 27.5.1
       '@types/node': 10.17.27
-      aws-cdk: 2.22.0
-      aws-cdk-lib: 2.22.0_constructs@10.1.7
+      aws-cdk: 2.24.1
+      aws-cdk-lib: 2.24.1_constructs@10.1.7
       aws-sdk: 2.1135.0
       constructs: 10.1.7
       esbuild: 0.14.39
@@ -101,6 +105,30 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.1.1
       '@jridgewell/trace-mapping': 0.3.13
+    dev: true
+
+  /@aws-cdk/aws-apigatewayv2-alpha/2.24.1-alpha.0_6wvhjcb7vhvipf6c3xp3hby66i:
+    resolution: {integrity: sha512-U7qi+mvGCJaUm8753yLs43L4PVPVaKJKU3RZ65iCj/uRB3dT2gDa7bdRQc6ptnvfZriLwDq6Au6NMbDAuNDluw==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      aws-cdk-lib: ^2.24.1
+      constructs: ^10.0.0
+    dependencies:
+      aws-cdk-lib: 2.24.1_constructs@10.1.7
+      constructs: 10.1.7
+    dev: true
+
+  /@aws-cdk/aws-apigatewayv2-integrations-alpha/2.24.1-alpha.0_32givmtu5o4mhcews7wdrdv3pu:
+    resolution: {integrity: sha512-/Nu2DH9suome5w7306T3tzqPMoQB3fve4xzX5VpTC798F7cQUlMqcxzyZD3s55nuRXnhRZoLdAQlwLbEUxUIxA==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      '@aws-cdk/aws-apigatewayv2-alpha': 2.24.1-alpha.0
+      aws-cdk-lib: ^2.24.1
+      constructs: ^10.0.0
+    dependencies:
+      '@aws-cdk/aws-apigatewayv2-alpha': 2.24.1-alpha.0_6wvhjcb7vhvipf6c3xp3hby66i
+      aws-cdk-lib: 2.24.1_constructs@10.1.7
+      constructs: 10.1.7
     dev: true
 
   /@aws-crypto/ie11-detection/2.0.0:
@@ -1873,8 +1901,8 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /aws-cdk-lib/2.22.0_constructs@10.1.7:
-    resolution: {integrity: sha512-Orz+c746XGm1QBJKb3Wh6qH2rpmHdYMS5A4Wk91niYzrY4Q2kck/XLeQtEwOzscbW2Hqwc6vXTEpkldAI2pzGw==}
+  /aws-cdk-lib/2.24.1_constructs@10.1.7:
+    resolution: {integrity: sha512-xGeEX+9wPGppSiIUdf/JTLMmqMikGhlSi7bjijl3lwncZtySkdjX0j+W2A1fuKp0S8Yd2axkwVkltIMxzNH/gw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       constructs: ^10.0.0
@@ -1901,8 +1929,8 @@ packages:
       - semver
       - yaml
 
-  /aws-cdk/2.22.0:
-    resolution: {integrity: sha512-oF3VCv/rtuLk8eLb6CBEWvEobabG8q05ersawGEy9CBhKbKNjfY1FDz6gc3ssksTwfcJqyJms2l/BQlLMBjugw==}
+  /aws-cdk/2.24.1:
+    resolution: {integrity: sha512-fDcJW7tLbqsCvWB3eZY6glRrjRE45VqLT+JuKz3C2jIe6qXkwV8dBwYXElwY/tTCh/hDlpWtCNMRdhmrdE25GQ==}
     engines: {node: '>= 14.15.0'}
     hasBin: true
     optionalDependencies:
