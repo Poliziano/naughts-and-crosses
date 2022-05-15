@@ -76,8 +76,9 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		grid-template-rows: repeat(3, 1fr);
-		width: 512px;
-		height: 512px;
+		aspect-ratio: 1;
+		width: 100%;
+		max-width: 512px;
 		background-image: url('/ox_board.png');
 		background-size: contain;
 	}
