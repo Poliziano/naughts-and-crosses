@@ -21,6 +21,7 @@ importers:
       aws-cdk-lib: 2.22.0
       aws-sdk: ^2.1135.0
       constructs: ^10.0.0
+      esbuild: ^0.14.39
       jest: ^28.0.3
       jest-dynalite: ^3.5.1
       ksuid: ^3.0.0
@@ -46,9 +47,10 @@ importers:
       aws-cdk-lib: 2.22.0_constructs@10.1.7
       aws-sdk: 2.1135.0
       constructs: 10.1.7
+      esbuild: 0.14.39
       jest: 28.1.0_qpmzkzmizziovq2f3tgxgzezg4
       jest-dynalite: 3.5.1_3bx2cj5jtap33ij4jt3qnqe2ve
-      ts-jest: 28.0.2_qy5m32hwmbz5mebulkdtchzcz4
+      ts-jest: 28.0.2_44jgbygewvphnhcbkurqcvskii
       ts-node: 10.7.0_skqhhvbzwje2okzfjhsbqzcnlq
       typescript: 4.6.4
 
@@ -4627,7 +4629,7 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /ts-jest/28.0.2_qy5m32hwmbz5mebulkdtchzcz4:
+  /ts-jest/28.0.2_44jgbygewvphnhcbkurqcvskii:
     resolution: {integrity: sha512-IOZMb3D0gx6IHO9ywPgiQxJ3Zl4ECylEFwoVpENB55aTn5sdO0Ptyx/7noNBxAaUff708RqQL4XBNxxOVjY0vQ==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     hasBin: true
@@ -4650,6 +4652,7 @@ packages:
     dependencies:
       '@types/jest': 27.5.1
       bs-logger: 0.2.6
+      esbuild: 0.14.39
       fast-json-stable-stringify: 2.1.0
       jest: 28.1.0_qpmzkzmizziovq2f3tgxgzezg4
       jest-util: 28.1.0

@@ -20,6 +20,7 @@
     "aws-cdk-lib": "2.22.0",
     "aws-sdk": "^2.1135.0",
     "constructs": "^10.0.0",
+    "esbuild": "^0.14.39",
     "jest": "^28.0.3",
     "jest-dynalite": "^3.5.1",
     "ts-jest": "^28.0.1",
