@@ -1,12 +1,12 @@
 import { createMachine, assign } from 'xstate';
 import { gameWinnigLines } from './lines';
-import type { OxCellState, OxPebbleCellState } from './ox-cell-state';
+import type { OxCellState, OxPebbleCellState, OxPlayer } from './ox-cell-state';
 import type { OxLocation } from './ox-location';
 import type { Observable } from 'rxjs';
 
 export type Context = {
 	cells: OxCellState[][];
-	currentPlayer: 'X' | 'O';
+	currentPlayer: OxPlayer;
 };
 
 export type Event =
