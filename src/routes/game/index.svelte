@@ -1,34 +1,44 @@
 <script lang="ts">
 	import OxCell from '$lib/components/ox-cell.svelte';
-	import { writable } from 'svelte/store';
 	import type { OxCellState } from '$lib/game/ox-cell-state';
-	import { OxGame } from '$lib/game/ox-game';
+	import { createOxMachine, type Event } from '$lib/game/ox-machine';
+	import { map, Observable, Subject, of, delay, pipe } from 'rxjs';
+	import { interpret } from 'xstate';
 
-	const ox = writable(new OxGame());
+	const cellClicked = new Subject<OxCellState>();
+	const playerOneObservable: Observable<Event> = cellClicked.pipe(
+		map((value) => ({
+			type: 'TURN_COMPLETED',
+			location: value.location
+		}))
+	);
 
-	function handleCellClicked(event: CustomEvent<OxCellState>) {
-		ox.update(function (value) {
-			value.place(event.detail.location);
-			return value;
-		});
-	}
+	const machine = createOxMachine({
+		getPlayerOneInput: () => playerOneObservable,
+		getPlayerTwoInput: (context, event) => {
+			const cells: OxCellState[] = context.cells.flat();
+			const availableCells = cells.filter((cell) => cell.type === 'empty');
+			const selection = Math.floor(Math.random() * availableCells.length);
 
-	function handleNewGameClicked() {
-		ox.update(function (value) {
-			value.reset();
-			return value;
-		});
-	}
+			return of<Event>({
+				type: 'TURN_COMPLETED',
+				location: availableCells[selection].location
+			}).pipe(delay(500));
+		}
+	});
+	const service = interpret(machine).start();
+	service.send('START');
+	$: cells = $service.context.cells.flat();
 </script>
 
 <div class="ox-container">
 	<div class="ox-slate">
-		{#each $ox.board.cells() as cell}
-			<OxCell state={cell} on:cellClick={handleCellClicked} />
+		{#each cells as cell}
+			<OxCell state={cell} on:cellClick={(event) => cellClicked.next(event.detail)} />
 		{/each}
 	</div>
 
-	<h2>
+	<!-- <h2>
 		{#if $ox.isWon()}
 			{$ox.currentPlayer().mark} wins!
 		{:else if !$ox.hasMovesRemaining()}
@@ -36,8 +46,8 @@
 		{:else}
 			Player {$ox.currentPlayer().mark}'s turn!
 		{/if}
-	</h2>
-	<button on:click={handleNewGameClicked}>New Game</button>
+	</h2> -->
+	<button on:click={() => service.send('START')}>New Game</button>
 </div>
 
 <style>
