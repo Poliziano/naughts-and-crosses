@@ -13,9 +13,9 @@
 
 <div class="ox-cell" on:click={handleClick}>
 	{#if state.type === 'X'}
-		X
+		<img class="ox" src="pebble/pebble_x_0.png" alt="Cross" />
 	{:else if state.type === 'O'}
-		<img class="ox" src="O_1.png" alt="Naught" />
+		<img class="ox" src="pebble/pebble_o_0.png" alt="Naught" />
 	{/if}
 </div>
 
