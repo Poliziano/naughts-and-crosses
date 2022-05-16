@@ -1,5 +1,5 @@
 import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
-import KSUID = require("ksuid");
+import KSUID from "ksuid";
 import { fromUserItem, toUserItem, User } from "../entity/user";
 import { db } from "./dynamo";
 

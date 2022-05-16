@@ -1,9 +1,12 @@
-import { GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { GetCommand, TransactWriteCommand } from "@aws-sdk/lib-dynamodb";
+import KSUID from "ksuid";
 import { fromRoomItem, Room, toRoomItem } from "../entity/room";
+import {
+  RoomConnection,
+  toRoomConnectionItem,
+} from "../entity/room-connection";
 import { User } from "../entity/user";
 import { db } from "./dynamo";
-import { createRoomConnection } from "./room-connection";
-import KSUID = require("ksuid");
 
 export async function createRoom(host: User): Promise<Room> {
   const room: Room = {
@@ -12,14 +15,29 @@ export async function createRoom(host: User): Promise<Room> {
     opponent: null,
   };
 
-  const command = new PutCommand({
-    TableName: "OXGame",
-    Item: toRoomItem(room),
+  const connection: RoomConnection = {
+    roomId: room.id,
+    userId: host.id,
+  };
+
+  const command = new TransactWriteCommand({
+    TransactItems: [
+      {
+        Put: {
+          TableName: "OXGame",
+          Item: toRoomItem(room),
+        },
+      },
+      {
+        Put: {
+          TableName: "OXGame",
+          Item: toRoomConnectionItem(connection),
+        },
+      },
+    ],
   });
 
   await db.send(command);
-  await createRoomConnection(room.id, host.id);
-
   return room;
 }
 
