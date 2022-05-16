@@ -35,14 +35,21 @@ export class BackendStack extends Stack {
       "connection-get.ts"
     );
 
+    const lambdaRoomCreate = new TransactionsNodejsFunction(
+      this,
+      "RoomCreate",
+      "room-create.ts"
+    );
+
     const lambdaOXWebsocket = new TransactionsNodejsFunction(
       this,
       "OXWebSocket",
       "ox-websocket.ts"
     );
 
-    oxTable.grantReadWriteData(lambdaUserGet);
-    oxTable.grantReadWriteData(lambdaConnectionGet);
+    oxTable.grantWriteData(lambdaUserGet);
+    oxTable.grantWriteData(lambdaRoomCreate);
+    oxTable.grantReadData(lambdaConnectionGet);
     oxTable.grantReadWriteData(lambdaOXWebsocket);
 
     const api = new apigatewayv2.WebSocketApi(this, "OX WebSocket API", {
