@@ -6,7 +6,7 @@ import {
 import { jest } from "@jest/globals";
 import { db } from "../lib/data/dynamo";
 
-type OXGamePrimaryKey = {
+type PrimaryKey = {
   PK: string;
   SK: string;
 };
@@ -18,7 +18,7 @@ afterEach(async () => {
 });
 
 async function deleteDynamoDBItems(commands: any[]) {
-  const keys: OXGamePrimaryKey[] = [];
+  const keys: PrimaryKey[] = [];
 
   for (const command of commands) {
     keys.push(
@@ -43,7 +43,7 @@ async function deleteDynamoDBItems(commands: any[]) {
   }
 }
 
-function extractPutCommandKey(command: PutCommand): OXGamePrimaryKey[] {
+function extractPutCommandKey(command: PutCommand): PrimaryKey[] {
   if (command?.input?.Item == null) {
     return [];
   }
@@ -57,8 +57,8 @@ function extractPutCommandKey(command: PutCommand): OXGamePrimaryKey[] {
 
 function extractTransactionCommandKeys(
   command: TransactWriteCommand
-): OXGamePrimaryKey[] {
-  const keys: OXGamePrimaryKey[] = [];
+): PrimaryKey[] {
+  const keys: PrimaryKey[] = [];
   for (const item of command?.input?.TransactItems ?? []) {
     if (item.Put?.Item) {
       keys.push({
@@ -72,8 +72,8 @@ function extractTransactionCommandKeys(
 
 function extractBatchWriteCommandKeys(
   command: BatchWriteCommand
-): OXGamePrimaryKey[] {
-  const keys: OXGamePrimaryKey[] = [];
+): PrimaryKey[] {
+  const keys: PrimaryKey[] = [];
   for (const item of command?.input?.RequestItems?.OXGame ?? []) {
     if (item.PutRequest?.Item) {
       keys.push({
