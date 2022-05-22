@@ -1,4 +1,8 @@
-<div class="menu">
+<script lang="ts">
+	import { fade } from 'svelte/transition';
+</script>
+
+<div class="menu" transition:fade>
 	<a href="/game?type=computer">
 		<img class="button" src="ox_vs_computer.png" alt="vs computer" />
 	</a>
@@ -10,6 +14,7 @@
 <style>
 	.menu {
 		display: flex;
+		position: absolute;
 		flex-direction: column;
 		width: 100%;
 		height: 100%;

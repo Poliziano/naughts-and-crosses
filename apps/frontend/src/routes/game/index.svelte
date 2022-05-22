@@ -5,6 +5,7 @@
 	import { delay, map, of, Subject } from 'rxjs';
 	import { interpret } from 'xstate';
 	import { page } from '$app/stores';
+	import { fade } from 'svelte/transition';
 
 	const cellClicked = new Subject<OxCellState>();
 
@@ -39,13 +40,13 @@
 	$: cells = $service.context.cells.flat();
 </script>
 
-<div class="header">
+<div class="header" transition:fade>
 	<a href="/"><img class="home" src="home.svg" alt="Return Home" /></a>
 	<h1>OX Game</h1>
 	<button class="new-game" on:click={() => service.send('START')}>New Game</button>
 </div>
 
-<div class="ox-container">
+<div class="ox-container" transition:fade>
 	<div class="ox-slate">
 		{#each cells as cell}
 			<OxCell state={cell} on:cellClick={(event) => cellClicked.next(event.detail)} />
@@ -91,7 +92,8 @@
 		height: 50px;
 		padding: 0 15px;
 		box-sizing: border-box;
-		border-bottom: 1px solid rgb(55, 55, 55);
+		background-color: rgb(57, 57, 57);
+		box-shadow: 2px 2px 20px rgb(24, 24, 24);
 	}
 	.home {
 		width: 40px;
