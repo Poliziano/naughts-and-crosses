@@ -101,11 +101,11 @@
 		height: 40px;
 	}
 	.new-game {
-		padding: 5px;
-		border: 2px solid white;
+		padding: 8px;
+		border: none;
 		border-radius: 5px;
-		background: none;
-		color: inherit;
+		background: whitesmoke;
+		color: #121213;
 		font: inherit;
 		cursor: pointer;
 		outline: inherit;
