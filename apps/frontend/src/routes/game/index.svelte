@@ -41,7 +41,7 @@
 </script>
 
 <div class="header" transition:fade>
-	<a href="/"><img class="home" src="home.svg" alt="Return Home" /></a>
+	<a class="home" href="/"><img src="home.svg" alt="Return Home" /></a>
 	<h1>OX Game</h1>
 	<button class="new-game" on:click={() => service.send('START')}>New Game</button>
 </div>
@@ -96,6 +96,7 @@
 		box-shadow: 2px 2px 20px rgb(24, 24, 24);
 	}
 	.home {
+		display: flex;
 		width: 40px;
 		height: 40px;
 	}
