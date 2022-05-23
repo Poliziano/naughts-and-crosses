@@ -92,8 +92,8 @@
 		height: 50px;
 		padding: 0 15px;
 		box-sizing: border-box;
-		background-color: rgb(57, 57, 57);
-		box-shadow: 2px 2px 20px rgb(24, 24, 24);
+		background-color: rgba(55, 55, 55, 0.9);
+		box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 	}
 	.home {
 		display: flex;
